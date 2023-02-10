@@ -1,0 +1,15 @@
+### Create a .env file and place it in the project root
+### Copy the following lines, replacing the values with your information
+
+# Discord
+DISCORD_CLIENT_ID='<your discord client id>'
+DISCORD_CLIENT_SECRET='<your discord secret>'
+DISCORD_TOKEN='<your discord token>'
+
+
+# Reddit
+REDDIT_CLIENT_ID='<your reddit client id>'
+REDDIT_CLIENT_SECRET='<your reddit client secret>'
+REDDIT_USERNAME='<your reddit username>'
+REDDIT_PASSWORD='<your reddit password>'
+REDDIT_USER_AGENT='<your bot user agent>'
