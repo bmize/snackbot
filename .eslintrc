@@ -1,0 +1,21 @@
+{
+    "extends": [
+        "prettier"
+    ],
+    // "parser": "babel-eslint",
+    "plugins": [
+        "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": [
+            "error"
+        ]
+    },
+    "env": {
+        "node": true,
+        "es2021": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 12
+    }
+}

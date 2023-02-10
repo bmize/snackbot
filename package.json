@@ -6,5 +6,21 @@
     "erlpack": "github:discord/erlpack",
     "utf-8-validate": "^5.0.10",
     "zlib-sync": "^0.1.8"
-  }
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1"
+  },
+  "name": "snackbot",
+  "description": "SnackBot is a chat bot for Discord with a mix of useful and novelty features.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js"
+  },
+  "author": "bmize",
+  "license": "MIT"
 }
