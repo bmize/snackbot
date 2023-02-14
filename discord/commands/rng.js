@@ -18,12 +18,16 @@ module.exports = {
       option
         .setName('count')
         .setDescription('The number of dice you want to roll.')
+        .setMinValue(1)
+        .setMaxValue(100)
         .setRequired(true)
     )
     .addIntegerOption((option) =>
       option
         .setName('sides')
         .setDescription('The number of sides on each die being rolled.')
+        .setMinValue(2)
+        .setMaxValue(1000000000)
         .setRequired(true)
     ),
   async execute(interaction) {
