@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 
 /**
+ *
  * @param {number} sides The number of sides on the die
  * @returns {number}
  */

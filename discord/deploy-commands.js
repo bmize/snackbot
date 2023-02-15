@@ -16,12 +16,9 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 (async () => {
   try {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
-    // const guildId = '737375580466577449';
-    const data = await rest.put(
-      // Routes.applicationGuildCommands(process.env.DISCORD_CLIENT_ID, guildId),
-      Routes.applicationCommands(process.env.DISCORD_CLIENT_ID),
-      { body: commands }
-    );
+    const data = await rest.put(Routes.applicationCommands(process.env.DISCORD_CLIENT_ID), {
+      body: commands,
+    });
 
     console.log(`Successfully reloaded ${data.length} application (/) commands.`);
   } catch (error) {

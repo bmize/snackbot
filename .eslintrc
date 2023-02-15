@@ -2,7 +2,6 @@
     "extends": [
         "prettier"
     ],
-    // "parser": "babel-eslint",
     "plugins": [
         "prettier"
     ],
