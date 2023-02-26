@@ -5,6 +5,11 @@ const SQLiteHandler = require(path.join(dbPath, 'sqlite-handler.js'));
 
 const db = new SQLiteHandler(path.join(dbPath, 'snackbot.db'));
 
+/**
+ *
+ * @param {string} snack
+ * @returns {EmbedBuilder}
+ */
 function buildEmbed(snack) {
   if (snack == null || snack.Name === null || snack.Name === '') {
     return null;
