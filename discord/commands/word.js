@@ -64,7 +64,6 @@ async function getDailyWord(date = '') {
 
     const today = new Date().toISOString().split('T')[0];
     if ((date === '' || date === today) && wordOfTheDay !== null && wordOfTheDay.date === today) {
-      console.log('used wotd cache');
       return wordOfTheDay;
     }
 
