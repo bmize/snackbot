@@ -1,12 +1,13 @@
 require('dotenv').config();
+
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const discordClient = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 // set up command listener
-client.commands = new Collection();
+discordClient.commands = new Collection();
 const commandsPath = path.join(__dirname, 'discord', 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
 
@@ -15,11 +16,9 @@ for (const file of commandFiles) {
   const command = require(filePath);
 
   if ('data' in command && 'execute' in command) {
-    client.commands.set(command.data.name, command);
+    discordClient.commands.set(command.data.name, command);
   } else {
-    console.log(
-      `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
-    );
+    console.warn(`The command at ${filePath} is missing a required "data" or "execute" property.`);
   }
 }
 
@@ -32,11 +31,11 @@ for (const file of eventFiles) {
   const event = require(filePath);
 
   if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args));
+    discordClient.once(event.name, (...args) => event.execute(...args));
   } else {
-    client.on(event.name, (...args) => event.execute(...args));
+    discordClient.on(event.name, (...args) => event.execute(...args));
   }
 }
 
 // log in to discord
-client.login(process.env.DISCORD_TOKEN);
+discordClient.login(process.env.DISCORD_TOKEN);
