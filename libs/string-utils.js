@@ -1,7 +1,7 @@
-const objectUtils = require('./object-utils');
+const { isNil } = require('./object-utils');
 
 function isBlank(str) {
-  return !!(objectUtils.isNil(str) || /^\s*$/.test(str));
+  return !!(isNil(str) || /^\s*$/.test(str));
 }
 
 module.exports = {
