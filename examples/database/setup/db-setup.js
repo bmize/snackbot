@@ -1,10 +1,10 @@
-const sqlite = require('better-sqlite3');
-const fs = require('fs');
-const csv = require('csv-parser');
+import { createReadStream } from 'fs';
+import csv from 'csv-parser';
+import sqlite from 'better-sqlite3';
 
-const db = sqlite('../../../database/snackbot.db');
+const SNACKBOT_DB = sqlite('../../../database/snackbot.db');
 
-db.exec(`
+SNACKBOT_DB.exec(`
   CREATE TABLE IF NOT EXISTS Snacks (
     Name TEXT,
     Origin TEXT,
@@ -13,12 +13,12 @@ db.exec(`
     ImageUrl TEXT)
 `);
 
-const stmt = db.prepare(`
+const stmt = SNACKBOT_DB.prepare(`
   INSERT INTO Snacks (Name, Origin, Description, WikiUrl, ImageUrl)
   VALUES (@Name, @Origin, @Description, @WikiUrl, @ImageUrl)
 `);
 
-fs.createReadStream('./snacks.csv')
+createReadStream('./snacks.csv')
   .pipe(csv())
   .on('data', (data) => {
     stmt.run(data);

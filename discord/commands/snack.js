@@ -1,10 +1,10 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 
-const constants = require('../../libs/constants');
-const { isBlank } = require('../../libs/string-utils');
-const SQLiteHandler = require('../../database/sqlite-handler');
+import { isBlank } from '../../libs/string-utils.js';
+import { SNACKBOT_DB_PATH } from '../../libs/constants.js';
+import { SQLiteHandler } from '../../database/sqlite-handler.js';
 
-const SNACKBOT_DB = new SQLiteHandler(constants.SNACKBOT_DB_PATH);
+const SNACKBOT_DB = new SQLiteHandler(SNACKBOT_DB_PATH);
 
 /**
  *
@@ -34,7 +34,7 @@ function buildEmbed(snack) {
   return embed;
 }
 
-module.exports = {
+export const command = {
   data: new SlashCommandBuilder().setName('snack').setDescription('Returns a random snack'),
   async execute(interaction) {
     const snack = await SNACKBOT_DB.get(

@@ -1,19 +1,18 @@
-require('dotenv').config();
+import 'dotenv/config';
 
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const fs = require('node:fs');
-const path = require('node:path');
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
+import { readdirSync } from 'node:fs';
 
 const discordClient = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 // set up command listener
 discordClient.commands = new Collection();
-const commandsPath = path.join(__dirname, 'discord', 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
+const commandsPath = './discord/commands';
+const commandFiles = readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-  const filePath = path.join(commandsPath, file);
-  const command = require(filePath);
+  const filePath = `${commandsPath}/${file}`;
+  const { command } = await import(filePath);
 
   if ('data' in command && 'execute' in command) {
     discordClient.commands.set(command.data.name, command);
@@ -23,12 +22,11 @@ for (const file of commandFiles) {
 }
 
 // set up event listener
-const eventsPath = path.join(__dirname, 'discord', 'events');
-const eventFiles = fs.readdirSync(eventsPath).filter((file) => file.endsWith('.js'));
+const eventsPath = './discord/events';
+const eventFiles = readdirSync(eventsPath).filter((file) => file.endsWith('.js'));
 
 for (const file of eventFiles) {
-  const filePath = path.join(eventsPath, file);
-  const event = require(filePath);
+  const { event } = await import(`${eventsPath}/${file}`);
 
   if (event.once) {
     discordClient.once(event.name, (...args) => event.execute(...args));

@@ -1,7 +1,3 @@
-function isNil(val) {
+export function isNil(val) {
   return val == null;
 }
-
-module.exports = {
-  isNil,
-};

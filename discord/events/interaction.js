@@ -1,6 +1,6 @@
-const { Events, MessageFlags } = require('discord.js');
+import { Events, MessageFlags } from 'discord.js';
 
-module.exports = {
+export const event = {
   name: Events.InteractionCreate,
   async execute(interaction) {
     if (!interaction.isChatInputCommand()) return;

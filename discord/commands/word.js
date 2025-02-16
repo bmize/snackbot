@@ -1,20 +1,21 @@
-const cheerio = require('cheerio');
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+import { DateTime } from 'luxon';
+import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { load } from 'cheerio';
 
-const { isBlank } = require('../../libs/string-utils');
-const { isNil } = require('../../libs/object-utils');
+import { isBlank } from '../../libs/string-utils.js';
+import { isNil } from '../../libs/object-utils.js';
 
 // Regex for a date in YYYY-mm-DD format from 1900-01-01 through 2099-12-31
-const DATE_REGEX = /^(19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+const DATE_REGEX = /^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
 let WORD_OF_THE_DAY = null;
 
 /**
  *
  * @param {string} date
- * @returns {boolean} true if the date is in ISO format (YYYY-mm-DD)
+ * @returns {boolean} true if the date is in ISO format (yyyy-MM-dd)
  */
 function isISODate(date) {
-    return DATE_REGEX.test(date);
+  return DATE_REGEX.test(date);
 }
 
 /**
@@ -25,14 +26,14 @@ function isISODate(date) {
 async function fetchNewWord(date) {
   try {
     if (isBlank(date)) {
-      date = new Date().toISOString().split('T')[0];
+      date = DateTime.now({ zone: 'America/New_York' }).toFormat('yyyy-MM-dd');
     } else if (!isISODate(date)) {
       return null;
     }
 
     const response = await fetch(`https://www.merriam-webster.com/word-of-the-day/${date}`);
     const body = await response.text();
-    const $ = cheerio.load(body);
+    const $ = load(body);
     const $word = $('div.article-header-container.wod-article-header div.word-header h2').text();
     const $definition = $('div.wod-definition-container > p:nth-child(2)').text();
     const result = {
@@ -54,12 +55,12 @@ async function fetchNewWord(date) {
 async function getDailyWord(date) {
   try {
     if (isBlank(date)) {
-      date = new Date().toISOString().split('T')[0];
+      date = DateTime.now({ zone: 'America/New_York' }).toFormat('yyyy-MM-dd');
     } else if (!isISODate(date)) {
       return null;
     }
 
-    const today = new Date().toISOString().split('T')[0];
+    const today = DateTime.now({ zone: 'America/New_York' }).toFormat('yyyy-MM-dd');
     if (date === today && WORD_OF_THE_DAY?.date === today) {
       return WORD_OF_THE_DAY;
     }
@@ -95,7 +96,7 @@ function buildEmbed(dailyWord) {
   }
 }
 
-module.exports = {
+export const command = {
   data: new SlashCommandBuilder()
     .setName('wordoftheday')
     .setDescription('Returns the current word of the day')

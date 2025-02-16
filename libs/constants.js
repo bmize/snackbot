@@ -1,9 +1,5 @@
-const path = require('path');
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
-const PROJECT_ROOT = path.join(__dirname, '..');
-const SNACKBOT_DB_PATH = path.join(PROJECT_ROOT, 'database', 'snackbot.db');
-
-module.exports = {
-  PROJECT_ROOT,
-  SNACKBOT_DB_PATH,
-};
+export const PROJECT_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+export const SNACKBOT_DB_PATH = join(PROJECT_ROOT, 'database', 'snackbot.db');
