@@ -1,6 +1,6 @@
-const sqlite = require('better-sqlite3');
+import sqlite from 'better-sqlite3';
 
-class SQLiteHandler {
+export class SQLiteHandler {
   /**
    *
    * @param {string} dbFileName The database file
@@ -46,5 +46,3 @@ class SQLiteHandler {
     console.log('Closing the database connection.');
   }
 }
-
-module.exports = SQLiteHandler;
